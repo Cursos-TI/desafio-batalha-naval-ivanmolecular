@@ -13,40 +13,61 @@ int main() {
         }
     }
 
-    // --- Posicionamento dos navios conforme pedido ---
+    // -------- Cone com base na posicao (0, 2) (coluna C, linha 1) --------
+    int cone_i = 0;
+    int cone_j = 2;
+    for (i = 0; i < 3; i++) {
+        for (j = -i; j <= i; j++) {
+            int x = cone_i + i;
+            int y = cone_j + j;
+            if (x >= 0 && x < 10 && y >= 0 && y < 10) {
+                tabuleiro[x][y] = 3;
+            }
+        }
+    }
 
-    // Navio diagonal \ de A1 ate C3
-    tabuleiro[0][0] = 3; // A1
-    tabuleiro[1][1] = 3; // B2
-    tabuleiro[2][2] = 3; // C3
+    // -------- Cruz com centro em (4, 5) (coluna F, linha 5) --------
+    int cruz_i = 4;
+    int cruz_j = 5;
+    for (i = cruz_i - 2; i <= cruz_i + 2; i++) {
+        if (i >= 0 && i < 10) {
+            tabuleiro[i][cruz_j] = 3;
+        }
+    }
+    for (j = cruz_j - 2; j <= cruz_j + 2; j++) {
+        if (j >= 0 && j < 10) {
+            tabuleiro[cruz_i][j] = 3;
+        }
+    }
 
-    // Navio horizontal de F3 ate H3
-    tabuleiro[2][5] = 3; // F3
-    tabuleiro[2][6] = 3; // G3
-    tabuleiro[2][7] = 3; // H3
-
-    // Navio vertical de D5 ate D7
-    tabuleiro[4][3] = 3; // D5
-    tabuleiro[5][3] = 3; // D6
-    tabuleiro[6][3] = 3; // D7
-
-    // Navio diagonal / de H7 ate J9
-    tabuleiro[6][7] = 3; // H7
-    tabuleiro[7][8] = 3; // I8
-    tabuleiro[8][9] = 3; // J9
+    // -------- Octaedro com centro em (7, 1) (coluna B, linha 8) --------
+    int oct_i = 7;
+    int oct_j = 1;
+    for (i = 0; i < 10; i++) {
+        for (j = 0; j < 10; j++) {
+            int soma = i + j;
+            int dif = i - j;
+            if ((soma >= oct_i + oct_j - 2) && (soma <= oct_i + oct_j + 2) &&
+                (dif >= oct_i - oct_j - 2) && (dif <= oct_i - oct_j + 2)) {
+                if (tabuleiro[i][j] == 0) {
+                    tabuleiro[i][j] = 3;
+                }
+            }
+        }
+    }
 
     // Exibe o cabecalho das colunas (letras de A ate J)
-    printf("\n   ");
+    printf("\n     ");
     for (j = 0; j < 10; j++) {
-        printf(" %c", 'A' + j);
+        printf("%c ", 'A' + j);
     }
     printf("\n");
 
-    // Exibe o tabuleiro com numeração das linhas
+    // Exibe o tabuleiro com numeracao das linhas
     for (i = 0; i < 10; i++) {
-        printf("%2d ", i + 1);
+        printf("%2d   ", i + 1);
         for (j = 0; j < 10; j++) {
-            printf(" %d", tabuleiro[i][j]);
+            printf("%d ", tabuleiro[i][j]);
         }
         printf("\n");
     }
